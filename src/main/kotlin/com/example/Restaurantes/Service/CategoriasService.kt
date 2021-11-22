@@ -17,11 +17,21 @@ class CategoriasService {
     }
 
     fun save(@RequestBody categorias: Categorias): Categorias{
-        return categoriasRepository.save(categorias)
+        if (categorias.tipo.equals("")){
+            throw Exception()
+        }
+        else {
+            return categoriasRepository.save(categorias)
+        }
     }
 
     fun update(@RequestBody categorias: Categorias): Categorias{
-        return categoriasRepository.save(categorias)
+        if (categorias.tipo.equals("")){
+            throw Exception()
+        }
+        else {
+            return categoriasRepository.save(categorias)
+        }
     }
 
     fun updateTipo (categorias: Categorias): Categorias {

@@ -17,11 +17,21 @@ class DueñosService {
     }
 
     fun save(@RequestBody dueños: Dueños): Dueños{
-        return dueñosRepository.save(dueños)
+        if (dueños.nombre.equals("") && dueños.email.equals("")){
+            throw Exception()
+        }
+        else {
+            return dueñosRepository.save(dueños)
+        }
     }
 
     fun update(@RequestBody dueños: Dueños): Dueños {
-        return dueñosRepository.save(dueños)
+        if (dueños.nombre.equals("") && dueños.email.equals("")){
+            throw Exception()
+        }
+        else {
+            return dueñosRepository.save(dueños)
+        }
     }
 
     fun updateNombre (dueños: Dueños): Dueños {

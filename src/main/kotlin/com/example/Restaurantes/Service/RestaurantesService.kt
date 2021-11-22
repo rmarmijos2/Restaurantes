@@ -17,11 +17,21 @@ class RestaurantesService {
     }
 
     fun save(@RequestBody restaurantes: Restaurantes): Restaurantes{
-        return restaurantesRepository.save(restaurantes)
+        if (restaurantes.calificacion!! > 5 && restaurantes.dueños_idDueño!! < 0){
+            throw Exception()
+        }
+        else {
+            return restaurantesRepository.save(restaurantes)
+        }
     }
 
     fun update(@RequestBody restaurantes: Restaurantes): Restaurantes{
-        return restaurantesRepository.save(restaurantes)
+        if (restaurantes.calificacion!! > 5 && restaurantes.dueños_idDueño!! < 0){
+            throw Exception()
+        }
+        else {
+            return restaurantesRepository.save(restaurantes)
+        }
     }
 
     fun updateNombre (restaurantes: Restaurantes): Restaurantes{

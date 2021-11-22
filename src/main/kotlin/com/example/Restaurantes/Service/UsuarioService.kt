@@ -17,11 +17,21 @@ class UsuarioService {
     }
 
     fun save(@RequestBody usuario: Usuario): Usuario{
-        return usuarioRepository.save(usuario)
+        if (usuario.nombre.equals("") && usuario.edad!! > 100){
+            throw Exception()
+        }
+        else {
+            return usuarioRepository.save(usuario)
+        }
     }
 
     fun update(@RequestBody usuario: Usuario): Usuario {
-        return usuarioRepository.save(usuario)
+        if (usuario.nombre.equals("") && usuario.edad!! > 100){
+            throw Exception()
+        }
+        else {
+            return usuarioRepository.save(usuario)
+        }
     }
 
     fun updateNombre (usuario: Usuario): Usuario{
