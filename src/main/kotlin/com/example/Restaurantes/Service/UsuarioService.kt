@@ -20,8 +20,8 @@ class UsuarioService {
 
     fun save(@RequestBody usuario: Usuario): Usuario{
     try{
-        if (usuario.nombre.equals("") && usuario.edad!! > 100){
-            throw Exception()
+        if (usuario.nombre.equals("") || usuario.edad!! > 100){
+            throw Exception("Error en los campos requeridos")
         }
         else {
             return usuarioRepository.save(usuario)
@@ -29,16 +29,17 @@ class UsuarioService {
     }
     catch(ex: Exception){
         throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "Error en usuario", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
     }
 
     fun update(@RequestBody usuario: Usuario): Usuario {
         try {
             val response = usuarioRepository.findById(usuario.id)
-                ?: throw Exception()
-            if (usuario.nombre.equals("") && usuario.edad!! > 100){
-                throw Exception()
+                ?: throw Exception("El ID ${usuario.id} en usuarios no existe")
+
+            if (usuario.nombre.equals("") || usuario.edad!! > 100){
+                throw Exception("Error en los campos requeridos")
             }
             else {
                 return usuarioRepository.save(usuario)
@@ -46,22 +47,25 @@ class UsuarioService {
         }
         catch(ex: Exception){
             throw ResponseStatusException(
-                HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+                HttpStatus.NOT_FOUND, ex.message, ex)
         }
     }
 
     fun updateNombre (usuario: Usuario): Usuario{
     try {
+        if(usuario.nombre.equals("")){
+            throw Exception("El campo 'nombre' no puede estar vacio")
+        }
         val response = usuarioRepository.findById(usuario.id)
-            ?: throw Exception()
+            ?: throw Exception("El ID ${usuario.id} en usuarios no existe")
         response.apply {
             this.nombre = usuario.nombre
         }
         return usuarioRepository.save(response)
     }
-    catch(ex: Exception){
+    catch (ex: Exception) {
         throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
     }
 

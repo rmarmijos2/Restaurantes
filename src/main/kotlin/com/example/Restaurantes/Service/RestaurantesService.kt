@@ -24,7 +24,7 @@ class RestaurantesService {
 
     fun save(@RequestBody restaurantes: Restaurantes): Restaurantes{
     try{
-        if (restaurantes.calificacion!! > 5 && restaurantes.dueños_idDueño!! < 0){
+        if (restaurantes.calificacion!! > 5 || restaurantes.dueños_idDueño!! < 0){
             throw Exception()
         }
         else {
@@ -42,7 +42,7 @@ class RestaurantesService {
         try {
             val response = restaurantesRepository.findById(restaurantes.id)
                 ?: throw Exception()
-            if (restaurantes.calificacion!! > 5 && restaurantes.dueños_idDueño!! < 0){
+            if (restaurantes.calificacion!! > 5 || restaurantes.dueños_idDueño!! < 0){
                 throw Exception()
             }
             else {
@@ -57,16 +57,19 @@ class RestaurantesService {
 
     fun updateNombre (restaurantes: Restaurantes): Restaurantes{
     try {
+        if(restaurantes.nombre.equals("")){
+            throw Exception("El campo 'nombre' no puede estar vacio")
+        }
         val response = restaurantesRepository.findById(restaurantes.id)
-            ?: throw Exception()
+            ?: throw Exception("El ID ${restaurantes.id} en restaurantes no existe")
         response.apply {
             this.nombre = restaurantes.nombre
         }
         return restaurantesRepository.save(response)
     }
-    catch(ex: Exception){
+    catch (ex: Exception) {
         throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
     }
 

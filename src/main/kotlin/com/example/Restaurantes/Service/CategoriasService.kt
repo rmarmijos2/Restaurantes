@@ -21,45 +21,49 @@ class CategoriasService {
     fun save(@RequestBody categorias: Categorias): Categorias{
         try {
             if (categorias.tipo.equals("")) {
-                throw Exception()
+                throw Exception("El campo 'nombre' no puede estar vacio")
             } else {
                 return categoriasRepository.save(categorias)
             }
         }
         catch(ex: Exception){
             throw ResponseStatusException(
-                HttpStatus.NO_CONTENT, "No existe contenido", ex)
+                HttpStatus.NOT_FOUND, ex.message, ex)
         }
     }
 
     fun update(@RequestBody categorias: Categorias): Categorias{
     try {
         val response = categoriasRepository.findById(categorias.id)
-            ?: throw Exception()
+            ?: throw Exception("El ID ${categorias.id} en dueños no existe")
+
         if (categorias.tipo.equals("")) {
-            throw Exception()
+            throw Exception("El campo 'tipo' no puede estar vacio")
         } else {
             return categoriasRepository.save(categorias)
         }
     }
     catch(ex: Exception){
         throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
     }
 
     fun updateTipo (categorias: Categorias): Categorias {
     try {
+        if(categorias.tipo.equals("")){
+            throw Exception("El campo 'tipo' no puede estar vacio")
+        }
         val response = categoriasRepository.findById(categorias.id)
-            ?: throw Exception()
+            ?: throw Exception("El ID ${categorias.id} en dueños no existe")
         response.apply {
             this.tipo = categorias.tipo
         }
         return categoriasRepository.save(response)
     }
-    catch(ex: Exception){
+    catch (ex: Exception) {
         throw ResponseStatusException(
-            HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
     }
 
