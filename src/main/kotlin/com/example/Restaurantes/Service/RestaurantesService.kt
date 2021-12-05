@@ -1,10 +1,8 @@
 package com.example.Restaurantes.Service
 
 import com.example.Restaurantes.Model.Restaurantes
-import com.example.Restaurantes.Repository.DueñosRepository
 import com.example.Restaurantes.Repository.RestaurantesRepository
 import org.springframework.beans.factory.annotation.Autowired
-import org.springframework.data.repository.findByIdOrNull
 import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Service
 import org.springframework.web.bind.annotation.RequestBody
