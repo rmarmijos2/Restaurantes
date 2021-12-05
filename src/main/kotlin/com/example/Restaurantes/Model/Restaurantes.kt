@@ -14,5 +14,5 @@ class Restaurantes {
     var nombre: String? = null
     var calificacion: Int? = null
     var direccion: String? = null
-    var dueños_idDueño: Int? = null
+    var duenos_iddueno: Int? = null
 }

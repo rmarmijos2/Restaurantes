@@ -1,12 +1,12 @@
 package com.example.Restaurantes.Controller
 
-import com.example.Restaurantes.Model.Dueños
+import com.example.Restaurantes.Model.Duenos
 import com.example.Restaurantes.Service.DueñosService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.web.bind.annotation.*
 
 @RestController
-@RequestMapping("/dueños")
+@RequestMapping("/duenos")
 @CrossOrigin(methods = [RequestMethod.GET, RequestMethod.POST, RequestMethod.PATCH, RequestMethod.PUT])
 
 class DueñosController {
@@ -15,23 +15,23 @@ class DueñosController {
     lateinit var dueñosService: DueñosService
 
     @GetMapping
-    fun list(): List<Dueños>{
+    fun list(): List<Duenos>{
         return dueñosService.list()
     }
 
     @PostMapping
-    fun save (@RequestBody dueños: Dueños): Dueños{
+    fun save (@RequestBody dueños: Duenos): Duenos{
         return dueñosService.save(dueños)
     }
 
     @PutMapping
-    fun update (@RequestBody dueños: Dueños): Dueños{
+    fun update (@RequestBody dueños: Duenos): Duenos{
         return dueñosService.update(dueños)
     }
 
     @PatchMapping
-    fun updateNombre (@RequestBody dueños: Dueños): Dueños{
-        return dueñosService.updateNombre(dueños)
+    fun updateNombre (@RequestBody duenos: Duenos): Duenos{
+        return dueñosService.updateNombre(duenos)
     }
 
     @DeleteMapping("/delete/{id}")

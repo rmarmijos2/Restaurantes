@@ -1,4 +1,4 @@
-create table if not exists dueños (
+create table if not exists duenos (
     id serial,
     nombre varchar(45) not null,
     edad int not null,
@@ -22,22 +22,15 @@ create table if not exists restaurantes (
     nombre varchar(45) not null,
     calificacion int not null,
     direccion varchar(100) not null,
-    dueños_idDueño int not null,
+    duenos_idDueno int not null,
     primary key (id),
-    FOREIGN KEY (dueños_idDueño) REFERENCES dueños(id)
+    FOREIGN KEY (duenos_idDueno) REFERENCES duenos(id),
     );
 
 create table if not exists categoria (
     id serial,
     tipo varchar(45) not null,
     primary key (id)
-    );
-
-create table if not exists categoria_restaurantes(
-    categoria_idCategoria int not null,
-    restaurantes_idRestaurante int not null,
-    FOREIGN KEY (categoria_idCategoria) REFERENCES categoria(id),
-    FOREIGN KEY (restaurantes_idRestaurante) REFERENCES restaurantes(id)
     );
 
 create table if not exists consulta (

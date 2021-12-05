@@ -3,9 +3,9 @@ package com.example.Restaurantes.Model
 import javax.persistence.*
 
 @Entity
-@Table(name = "dueños")
+@Table(name = "duenos")
 
-class Dueños {
+class Duenos {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(updatable = false)

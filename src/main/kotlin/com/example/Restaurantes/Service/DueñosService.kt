@@ -1,6 +1,6 @@
 package com.example.Restaurantes.Service
 
-import com.example.Restaurantes.Model.Dueños
+import com.example.Restaurantes.Model.Duenos
 import com.example.Restaurantes.Repository.DueñosRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -14,11 +14,11 @@ class DueñosService {
     lateinit var dueñosRepository: DueñosRepository
 
 
-    fun list(): List<Dueños> {
+    fun list(): List<Duenos> {
         return dueñosRepository.findAll()
     }
 
-    fun save(@RequestBody dueños: Dueños): Dueños{
+    fun save(@RequestBody dueños: Duenos): Duenos{
     try {
         if (dueños.nombre.equals("") || dueños.email.equals("")) {
             throw Exception("Los campos no pueden estar vacios")
@@ -32,7 +32,7 @@ class DueñosService {
     }
     }
 
-    fun update(@RequestBody dueños: Dueños): Dueños {
+    fun update(@RequestBody dueños: Duenos): Duenos {
         try {
             val response = dueñosRepository.findById(dueños.id)
                 ?: throw Exception("El ID ${dueños.id} en dueños no existe")
@@ -50,7 +50,7 @@ class DueñosService {
         }
     }
 
-    fun updateNombre (dueños: Dueños): Dueños {
+    fun updateNombre (dueños: Duenos): Duenos {
     try {
         if(dueños.nombre.equals("")){
             throw Exception("El campo 'nombre' no puede estar vacio")

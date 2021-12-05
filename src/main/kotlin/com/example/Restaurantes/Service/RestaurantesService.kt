@@ -1,5 +1,6 @@
 package com.example.Restaurantes.Service
 
+import com.example.Restaurantes.Model.Duenos
 import com.example.Restaurantes.Model.Restaurantes
 import com.example.Restaurantes.Repository.DueñosRepository
 import com.example.Restaurantes.Repository.RestaurantesRepository
@@ -11,47 +12,56 @@ import org.springframework.web.server.ResponseStatusException
 
 @Service
 class RestaurantesService {
-    @Autowired
-    lateinit var restaurantesRepository: RestaurantesRepository
 
     @Autowired
+    lateinit var restaurantesRepository: RestaurantesRepository
+    @Autowired
     lateinit var dueñosRepository: DueñosRepository
+    lateinit var dueños: Duenos
 
 
     fun list(): List<Restaurantes> {
         return restaurantesRepository.findAll()
     }
 
-    fun save(@RequestBody restaurantes: Restaurantes): Restaurantes{
+    fun save(@RequestBody restaurantes: Restaurantes): Restaurantes {
     try{
-        if (restaurantes.calificacion!! > 5 || restaurantes.dueños_idDueño!! < 0){
-            throw Exception()
+        val response = dueñosRepository.findById(dueños.id)
+            ?: throw Exception("El ID ${dueños.id} en dueños no existe")
+
+        if (restaurantes.calificacion!! > 5){
+            throw Exception("Valor excedido")
         }
         else {
             return restaurantesRepository.save(restaurantes)
         }
     }
-    catch(ex: Exception){
+    catch (ex: Exception) {
         throw ResponseStatusException(
-            HttpStatus.NOT_ACCEPTABLE, "Valor excedido", ex)
+            HttpStatus.NOT_FOUND, ex.message, ex)
     }
 
     }
 
     fun update(@RequestBody restaurantes: Restaurantes): Restaurantes{
         try {
+
             val response = restaurantesRepository.findById(restaurantes.id)
-                ?: throw Exception()
-            if (restaurantes.calificacion!! > 5 || restaurantes.dueños_idDueño!! < 0){
-                throw Exception()
+                ?: throw Exception("El ID ${restaurantes.id} en restaurantes no existe")
+
+            val respons = dueñosRepository.findById(dueños.id)
+                ?: throw Exception("El ID ${dueños.id} en dueños no existe")
+
+            if (restaurantes.calificacion!! > 5){
+                throw Exception("Valor Excedido")
             }
             else {
                 return restaurantesRepository.save(restaurantes)
             }
         }
-        catch(ex: Exception){
+        catch (ex: Exception) {
             throw ResponseStatusException(
-                HttpStatus.NOT_FOUND, "ID no encontrado", ex)
+                HttpStatus.NOT_FOUND, ex.message, ex)
         }
     }
 
