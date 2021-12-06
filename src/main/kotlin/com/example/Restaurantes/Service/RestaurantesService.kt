@@ -1,6 +1,7 @@
 package com.example.Restaurantes.Service
 
 import com.example.Restaurantes.Model.Restaurantes
+import com.example.Restaurantes.Repository.DueñosRepository
 import com.example.Restaurantes.Repository.RestaurantesRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -13,6 +14,8 @@ class RestaurantesService {
 
     @Autowired
     lateinit var restaurantesRepository: RestaurantesRepository
+    @Autowired
+    lateinit var dueñosRepository: DueñosRepository
 
 
     fun list(): List<Restaurantes> {
@@ -21,6 +24,10 @@ class RestaurantesService {
 
     fun save(@RequestBody restaurantes: Restaurantes): Restaurantes {
     try{
+
+        val response = dueñosRepository.findById(restaurantes.idDueno)
+            ?: throw Exception("El ID ${restaurantes.idDueno} en dueños no existe")
+
         if (restaurantes.calificacion!! > 5){
             throw Exception("Valor excedido")
         }
@@ -40,6 +47,9 @@ class RestaurantesService {
 
             val response = restaurantesRepository.findById(restaurantes.id)
                 ?: throw Exception("El ID ${restaurantes.id} en restaurantes no existe")
+
+            val respons = dueñosRepository.findById(restaurantes.idDueno)
+                ?: throw Exception("El ID ${restaurantes.idDueno} en la tabla dueños no existe")
 
             if (restaurantes.calificacion!! > 5){
                 throw Exception("Valor Excedido")

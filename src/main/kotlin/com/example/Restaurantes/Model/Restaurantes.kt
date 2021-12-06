@@ -14,5 +14,6 @@ class Restaurantes {
     var nombre: String? = null
     var calificacion: Int? = null
     var direccion: String? = null
-    var duenos_iddueno: Long? = null
+    @Column(name="iddueno")
+    var idDueno: Long? = null
 }
