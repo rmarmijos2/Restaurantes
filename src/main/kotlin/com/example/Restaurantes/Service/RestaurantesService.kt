@@ -1,6 +1,7 @@
 package com.example.Restaurantes.Service
 
 import com.example.Restaurantes.Model.Restaurantes
+import com.example.Restaurantes.Repository.CategoriasRepository
 import com.example.Restaurantes.Repository.DueñosRepository
 import com.example.Restaurantes.Repository.RestaurantesRepository
 import org.springframework.beans.factory.annotation.Autowired
@@ -16,6 +17,8 @@ class RestaurantesService {
     lateinit var restaurantesRepository: RestaurantesRepository
     @Autowired
     lateinit var dueñosRepository: DueñosRepository
+    @Autowired
+    lateinit var categoriaRepository: CategoriasRepository
 
 
     fun list(): List<Restaurantes> {
@@ -27,6 +30,9 @@ class RestaurantesService {
 
         val response = dueñosRepository.findById(restaurantes.idDueno)
             ?: throw Exception("El ID ${restaurantes.idDueno} en dueños no existe")
+
+        val respons = categoriaRepository.findById(restaurantes.idCategoria)
+            ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
         if (restaurantes.calificacion!! > 5){
             throw Exception("Valor excedido")
@@ -50,6 +56,9 @@ class RestaurantesService {
 
             val respons = dueñosRepository.findById(restaurantes.idDueno)
                 ?: throw Exception("El ID ${restaurantes.idDueno} en la tabla dueños no existe")
+
+            val response1 = categoriaRepository.findById(restaurantes.idCategoria)
+                ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
             if (restaurantes.calificacion!! > 5){
                 throw Exception("Valor Excedido")

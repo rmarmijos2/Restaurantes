@@ -23,8 +23,10 @@ create table if not exists restaurantes (
     calificacion int not null,
     direccion varchar(100) not null,
     idDueno int not null,
+    idCategoria int not null,
     primary key (id),
     FOREIGN KEY (idDueno) REFERENCES duenos(id),
+    FOREIGN KEY (idCategoria) REFERENCES categoria(id)
     );
 
 create table if not exists categoria (
