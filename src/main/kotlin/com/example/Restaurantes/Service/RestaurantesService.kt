@@ -73,7 +73,7 @@ class RestaurantesService {
         }
     }
 
-    fun updateNombre (restaurantes: Restaurantes): Restaurantes{
+    fun updateNombre (@RequestBody restaurantes: Restaurantes): Restaurantes{
     try {
         if(restaurantes.nombre.equals("")){
             throw Exception("El campo 'nombre' no puede estar vacio")
