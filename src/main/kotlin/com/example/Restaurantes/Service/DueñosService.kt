@@ -18,13 +18,12 @@ class DueñosService {
         return dueñosRepository.findAll()
     }
 
-    fun save(@RequestBody dueños: Duenos): Duenos{
+    fun save(@RequestBody duenos: Duenos): Duenos{
     try {
-        if (dueños.nombre.equals("") || dueños.email.equals("")) {
-            throw Exception("Los campos no pueden estar vacios")
-        } else {
-            return dueñosRepository.save(dueños)
-        }
+        duenos.nombre?.takeIf { it.trim().isNotEmpty() } //Falta Validar Email
+            ?: throw Exception("Los campos no pueden estar vacios")
+
+            return dueñosRepository.save(duenos)
     }
     catch(ex: Exception){
         throw ResponseStatusException(
@@ -32,17 +31,15 @@ class DueñosService {
     }
     }
 
-    fun update(@RequestBody dueños: Duenos): Duenos {
+    fun update(@RequestBody duenos: Duenos): Duenos {
         try {
-            val response = dueñosRepository.findById(dueños.id)
-                ?: throw Exception("El ID ${dueños.id} en dueños no existe")
+            val response = dueñosRepository.findById(duenos.id)
+                ?: throw Exception("El ID ${duenos.id} en dueños no existe")
 
-            if (dueños.nombre.equals("") || dueños.email.equals("")){
-                throw Exception("Los campos no pueden estar vacios")
-            }
-            else {
-                return dueñosRepository.save(dueños)
-            }
+            duenos.nombre?.takeIf { it.trim().isNotEmpty() } //Falta Validar Email
+                ?: throw Exception("Los campos no pueden estar vacios")
+
+            return dueñosRepository.save(duenos)
         }
         catch (ex: Exception) {
             throw ResponseStatusException(
@@ -50,15 +47,15 @@ class DueñosService {
         }
     }
 
-    fun updateNombre (dueños: Duenos): Duenos {
-    try {
-        if(dueños.nombre.equals("")){
-            throw Exception("El campo 'nombre' no puede estar vacio")
-        }
-        val response = dueñosRepository.findById(dueños.id)
-            ?: throw Exception("El ID ${dueños.id} en dueños no existe")
+    fun updateNombre (duenos: Duenos): Duenos {
+     try {
+        duenos.nombre?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'nombre' no puede estar vacio")
+
+        val response = dueñosRepository.findById(duenos.id)
+            ?: throw Exception("El ID ${duenos.id} en dueños no existe")
         response.apply {
-            this.nombre = dueños.nombre
+            this.nombre = duenos.nombre
         }
         return dueñosRepository.save(response)
     }

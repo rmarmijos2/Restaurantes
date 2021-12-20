@@ -20,8 +20,11 @@ class UsuarioService {
 
     fun save(@RequestBody usuario: Usuario): Usuario{
     try{
-        if (usuario.nombre.equals("") || usuario.edad!! > 100){
-            throw Exception("Error en los campos requeridos")
+        usuario.nombre?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'nombre' no puede estar vacio")
+
+        if (usuario.edad!! > 100){
+            throw Exception("Error, Edad Erronea")
         }
         else {
             return usuarioRepository.save(usuario)
@@ -38,8 +41,11 @@ class UsuarioService {
             val response = usuarioRepository.findById(usuario.id)
                 ?: throw Exception("El ID ${usuario.id} en usuarios no existe")
 
-            if (usuario.nombre.equals("") || usuario.edad!! > 100){
-                throw Exception("Error en los campos requeridos")
+            usuario.nombre?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("El campo 'nombre' no puede estar vacio")
+
+            if (usuario.edad!! > 100){
+                throw Exception("Error, Edad Erronea")
             }
             else {
                 return usuarioRepository.save(usuario)
@@ -53,9 +59,9 @@ class UsuarioService {
 
     fun updateNombre (usuario: Usuario): Usuario{
     try {
-        if(usuario.nombre.equals("")){
-            throw Exception("El campo 'nombre' no puede estar vacio")
-        }
+        usuario.nombre?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'nombre' no puede estar vacio")
+
         val response = usuarioRepository.findById(usuario.id)
             ?: throw Exception("El ID ${usuario.id} en usuarios no existe")
         response.apply {

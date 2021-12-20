@@ -34,12 +34,10 @@ class RestaurantesService {
         val respons = categoriaRepository.findById(restaurantes.idCategoria)
             ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
-        if (restaurantes.calificacion!! > 5){
+        restaurantes.calificacion?.takeIf { it < 0 }
             throw Exception("Valor excedido")
-        }
-        else {
+
             return restaurantesRepository.save(restaurantes)
-        }
     }
     catch (ex: Exception) {
         throw ResponseStatusException(
@@ -60,12 +58,11 @@ class RestaurantesService {
             val response1 = categoriaRepository.findById(restaurantes.idCategoria)
                 ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
-            if (restaurantes.calificacion!! > 5){
-                throw Exception("Valor Excedido")
-            }
-            else {
+            restaurantes.calificacion?.takeIf { it < 0 }
+            throw Exception("Valor excedido")
+
                 return restaurantesRepository.save(restaurantes)
-            }
+
         }
         catch (ex: Exception) {
             throw ResponseStatusException(
@@ -75,9 +72,9 @@ class RestaurantesService {
 
     fun updateNombre (@RequestBody restaurantes: Restaurantes): Restaurantes{
     try {
-        if(restaurantes.nombre.equals("")){
-            throw Exception("El campo 'nombre' no puede estar vacio")
-        }
+        restaurantes.nombre?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'nombre' no puede estar vacio")
+
         val response = restaurantesRepository.findById(restaurantes.id)
             ?: throw Exception("El ID ${restaurantes.id} en restaurantes no existe")
         response.apply {

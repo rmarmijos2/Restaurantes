@@ -20,11 +20,10 @@ class CategoriasService {
 
     fun save(@RequestBody categorias: Categorias): Categorias{
         try {
-            if (categorias.tipo.equals("")) {
-                throw Exception("El campo 'nombre' no puede estar vacio")
-            } else {
-                return categoriasRepository.save(categorias)
-            }
+            categorias.tipo?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("El campo 'tipo' no puede estar vacio")
+
+            return categoriasRepository.save(categorias)
         }
         catch(ex: Exception){
             throw ResponseStatusException(
@@ -37,11 +36,10 @@ class CategoriasService {
         val response = categoriasRepository.findById(categorias.id)
             ?: throw Exception("El ID ${categorias.id} en dueños no existe")
 
-        if (categorias.tipo.equals("")) {
-            throw Exception("El campo 'tipo' no puede estar vacio")
-        } else {
+        categorias.tipo?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'tipo' no puede estar vacio")
+
             return categoriasRepository.save(categorias)
-        }
     }
     catch(ex: Exception){
         throw ResponseStatusException(
@@ -51,9 +49,9 @@ class CategoriasService {
 
     fun updateTipo (categorias: Categorias): Categorias {
     try {
-        if(categorias.tipo.equals("")){
-            throw Exception("El campo 'tipo' no puede estar vacio")
-        }
+        categorias.tipo?.takeIf { it.trim().isNotEmpty() }
+            ?:  throw Exception("El campo 'tipo' no puede estar vacio")
+
         val response = categoriasRepository.findById(categorias.id)
             ?: throw Exception("El ID ${categorias.id} en dueños no existe")
         response.apply {
