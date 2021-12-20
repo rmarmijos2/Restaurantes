@@ -2,7 +2,7 @@ package com.example.Restaurantes.Service
 
 import com.example.Restaurantes.Model.Restaurantes
 import com.example.Restaurantes.Repository.CategoriasRepository
-import com.example.Restaurantes.Repository.DueñosRepository
+import com.example.Restaurantes.Repository.DuenosRepository
 import com.example.Restaurantes.Repository.RestaurantesRepository
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.http.HttpStatus
@@ -16,7 +16,7 @@ class RestaurantesService {
     @Autowired
     lateinit var restaurantesRepository: RestaurantesRepository
     @Autowired
-    lateinit var dueñosRepository: DueñosRepository
+    lateinit var dueñosRepository: DuenosRepository
     @Autowired
     lateinit var categoriaRepository: CategoriasRepository
 
