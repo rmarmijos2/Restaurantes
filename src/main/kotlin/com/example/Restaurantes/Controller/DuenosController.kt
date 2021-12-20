@@ -20,13 +20,13 @@ class DuenosController {
     }
 
     @PostMapping
-    fun save (@RequestBody dueños: Duenos): Duenos{
-        return duenosService.save(dueños)
+    fun save (@RequestBody duenos: Duenos): Duenos{
+        return duenosService.save(duenos)
     }
 
     @PutMapping
-    fun update (@RequestBody dueños: Duenos): Duenos{
-        return duenosService.update(dueños)
+    fun update (@RequestBody duenos: Duenos): Duenos{
+        return duenosService.update(duenos)
     }
 
     @PatchMapping
