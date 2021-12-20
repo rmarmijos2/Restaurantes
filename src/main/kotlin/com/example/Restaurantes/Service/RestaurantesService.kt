@@ -16,7 +16,7 @@ class RestaurantesService {
     @Autowired
     lateinit var restaurantesRepository: RestaurantesRepository
     @Autowired
-    lateinit var dueñosRepository: DuenosRepository
+    lateinit var duenosRepository: DuenosRepository
     @Autowired
     lateinit var categoriaRepository: CategoriasRepository
 
@@ -28,7 +28,7 @@ class RestaurantesService {
     fun save(@RequestBody restaurantes: Restaurantes): Restaurantes {
     try{
 
-        val response = dueñosRepository.findById(restaurantes.idDueno)
+        val response = duenosRepository.findById(restaurantes.idDueno)
             ?: throw Exception("El ID ${restaurantes.idDueno} en dueños no existe")
 
         val respons = categoriaRepository.findById(restaurantes.idCategoria)
@@ -52,7 +52,7 @@ class RestaurantesService {
             val response = restaurantesRepository.findById(restaurantes.id)
                 ?: throw Exception("El ID ${restaurantes.id} en restaurantes no existe")
 
-            val respons = dueñosRepository.findById(restaurantes.idDueno)
+            val respons = duenosRepository.findById(restaurantes.idDueno)
                 ?: throw Exception("El ID ${restaurantes.idDueno} en la tabla dueños no existe")
 
             val response1 = categoriaRepository.findById(restaurantes.idCategoria)
