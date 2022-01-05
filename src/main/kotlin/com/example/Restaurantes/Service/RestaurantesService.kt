@@ -34,8 +34,9 @@ class RestaurantesService {
         val respons = categoriaRepository.findById(restaurantes.idCategoria)
             ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
-        restaurantes.calificacion?.takeIf { it < 0 }
+        if (restaurantes.calificacion!! <= 0){
             throw Exception("Valor excedido")
+        }
 
             return restaurantesRepository.save(restaurantes)
     }
@@ -58,8 +59,9 @@ class RestaurantesService {
             val response1 = categoriaRepository.findById(restaurantes.idCategoria)
                 ?: throw Exception("El ID ${restaurantes.idCategoria} en categorias no existe")
 
-            restaurantes.calificacion?.takeIf { it < 0 }
-            throw Exception("Valor excedido")
+            if (restaurantes.calificacion!! <= 0){
+                throw Exception("Valor excedido")
+            }
 
                 return restaurantesRepository.save(restaurantes)
 
