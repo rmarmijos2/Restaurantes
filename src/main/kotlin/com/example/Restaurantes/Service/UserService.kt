@@ -34,4 +34,31 @@ class UserService {
     fun update(user: User): User {
         return userRepository.save(user)
     }
+
+    fun calcularMultiplicacion (index: Int, number: Int): Int{
+        if (index %2 ==0){
+            return number * 2
+        }
+        else {
+            return number
+        }
+    }
+
+    fun restNine(number: Int): Int{
+        if (number in 10..18){
+            return number - 9
+        } else {
+            return number
+        }
+    }
+
+    fun subtactFromNextTen (number: Int): Int{
+        var decena = (number/10) + 1
+        var response = (decena*10) - number
+        if (response == 10) {
+            return 0
+        }
+            return response
+    }
+
 }
