@@ -34,4 +34,10 @@ class UserServiceTest {
         Assertions.assertEquals(0, response)
     }
 
+    @Test
+    fun validarCedula (){
+        val response = userService.validarCedula("0150102861")
+        Assertions.assertEquals(true, response)
+    }
+
 }
