@@ -16,4 +16,5 @@ class AppUserDetailsService : UserDetailsService {
         val response = userService.getUser(username)
         return User(response?.username,"{noop}"+response?.password, ArrayList())
     }
+
 }

@@ -19,4 +19,5 @@ class UserController {
     fun save (@RequestBody user: User): User {
         return userService.save(user)
     }
+
 }

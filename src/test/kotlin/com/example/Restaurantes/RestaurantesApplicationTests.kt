@@ -9,5 +9,4 @@ class RestaurantesApplicationTests {
 	@Test
 	fun contextLoads() {
 	}
-
 }

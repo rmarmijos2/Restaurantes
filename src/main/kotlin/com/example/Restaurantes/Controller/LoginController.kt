@@ -28,7 +28,6 @@ class LoginController {
     @Autowired
     lateinit var jwtUtil: JwtUtil
 
-
     @PostMapping("/auth")
     fun createToken(@RequestBody request: AuthenticationRequest): ResponseEntity<AuthenticationResponse> {
         try {

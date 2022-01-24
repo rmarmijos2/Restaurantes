@@ -94,4 +94,5 @@ class RestaurantesService {
         restaurantesRepository.deleteById(id)
         return true
     }
+
 }

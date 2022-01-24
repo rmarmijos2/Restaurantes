@@ -79,4 +79,5 @@ class UsuarioService {
         usuarioRepository.deleteById(id)
         return true
     }
+
 }
