@@ -63,7 +63,7 @@ class CategoriasServiceEVA {
     @Test
     fun updateCategoriasIsListIncorrect(){
         Assertions.assertThrows(Exception::class.java) {
-            categoriasMock.apply { tipo= " "}
+            categoriasMock.apply { tipo= "Otro"}
             Mockito.`when`(categoriasRepository.findById(returnObject.id)).thenReturn(categoriasMock)
             Mockito.`when`(categoriasRepository.save(Mockito.any(Categorias::class.java))).thenReturn(categoriasMock)
             categoriasService.update(categoriasMock)
