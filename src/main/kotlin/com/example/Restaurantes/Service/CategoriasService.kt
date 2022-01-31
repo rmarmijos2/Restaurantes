@@ -13,6 +13,8 @@ class CategoriasService {
     @Autowired
     lateinit var categoriasRepository: CategoriasRepository
 
+    val listaTipos= listOf<String>("Mariscos","Cafe","FoodFast")
+
 
     fun list(): List<Categorias> {
         return categoriasRepository.findAll()
@@ -36,9 +38,9 @@ class CategoriasService {
         val response = categoriasRepository.findById(categorias.id)
             ?: throw Exception("El ID ${categorias.id} en dueños no existe")
 
-        categorias.tipo?.takeIf { it.trim().isNotEmpty() }
-            ?: throw Exception("El campo 'tipo' no puede estar vacio")
-
+        if (!validarCategorias(categorias.tipo!!)){
+            throw Exception("El campo 'tipo' no pertenece a la lista")
+        }
             return categoriasRepository.save(categorias)
     }
     catch(ex: Exception){
@@ -78,4 +80,14 @@ class CategoriasService {
                 HttpStatus.NOT_FOUND, ex.message, ex)
         }
     }
+
+    fun validarCategorias(tipo: String): Boolean {
+        for (i in listaTipos){
+            if (tipo == i){
+                return true
+            }
+        }
+        return false
+    }
 }
+
