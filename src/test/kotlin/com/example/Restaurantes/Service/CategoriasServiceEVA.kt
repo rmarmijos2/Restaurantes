@@ -43,7 +43,7 @@ class CategoriasServiceEVA {
     }
 
     @Test
-    fun updateCategoriasIsIdFailedWhenIdNotExist() {
+    fun updateCategoriasIsIdNotExist() {
         Assertions.assertThrows(Exception::class.java){
             Mockito.`when`(categoriasRepository.findById(returnObject.id)).thenReturn(null)
             Mockito.`when`(categoriasRepository.save(Mockito.any(Categorias::class.java))).thenReturn(returnObject)
