@@ -23,8 +23,20 @@ class UsuarioService {
         usuario.nombre?.takeIf { it.trim().isNotEmpty() }
             ?: throw Exception("El campo 'nombre' no puede estar vacio")
 
-        if (usuario.edad!! > 100){
+        usuario.email?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'email' no puede estar vacio")
+
+        usuario.genero?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'genero' no puede estar vacio")
+
+        usuario.direccion?.takeIf { it.trim().isNotEmpty() }
+            ?: throw Exception("El campo 'direccion' no puede estar vacio")
+
+        if (usuario.edad!! <= 0){
             throw Exception("Error, Edad Erronea")
+        }
+        if (usuario.telefono!! <= 0){
+            throw Exception("Error, Telefono Erronea")
         }
         else {
             return usuarioRepository.save(usuario)
@@ -44,8 +56,20 @@ class UsuarioService {
             usuario.nombre?.takeIf { it.trim().isNotEmpty() }
                 ?: throw Exception("El campo 'nombre' no puede estar vacio")
 
-            if (usuario.edad!! > 100){
+            usuario.email?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("El campo 'email' no puede estar vacio")
+
+            usuario.genero?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("El campo 'genero' no puede estar vacio")
+
+            usuario.direccion?.takeIf { it.trim().isNotEmpty() }
+                ?: throw Exception("El campo 'direccion' no puede estar vacio")
+
+            if (usuario.edad!! <= 0){
                 throw Exception("Error, Edad Erronea")
+            }
+            if (usuario.telefono!! <= 0){
+                throw Exception("Error, Telefono Erronea")
             }
             else {
                 return usuarioRepository.save(usuario)
@@ -75,9 +99,17 @@ class UsuarioService {
     }
     }
 
-    fun delete (id:Long): Boolean{
-        usuarioRepository.deleteById(id)
-        return true
+    fun delete (id:Long?): Boolean{
+        try {
+            usuarioRepository.findById(id)
+                ?: throw Exception("NO existe el ID")
+            usuarioRepository.deleteById(id!!)
+            return true
+        }
+        catch (ex: Exception) {
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+        }
     }
 
 }

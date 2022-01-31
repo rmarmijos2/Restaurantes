@@ -66,8 +66,16 @@ class CategoriasService {
     }
 
 
-    fun delete (id:Long): Boolean{
-        categoriasRepository.deleteById(id)
-        return true
+    fun delete (id:Long?): Boolean{
+        try {
+            categoriasRepository.findById(id)
+                ?: throw Exception("NO existe el ID")
+            categoriasRepository.deleteById(id!!)
+            return true
+        }
+        catch (ex: Exception) {
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+        }
     }
 }

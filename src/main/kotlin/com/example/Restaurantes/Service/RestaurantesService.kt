@@ -90,9 +90,17 @@ class RestaurantesService {
     }
     }
 
-    fun delete (id:Long): Boolean{
-        restaurantesRepository.deleteById(id)
-        return true
+    fun delete (id:Long?): Boolean{
+        try {
+            restaurantesRepository.findById(id)
+                ?: throw Exception("NO existe el ID")
+            restaurantesRepository.deleteById(id!!)
+            return true
+        }
+        catch (ex: Exception) {
+            throw ResponseStatusException(
+                HttpStatus.NOT_FOUND, ex.message, ex)
+        }
     }
 
 }
